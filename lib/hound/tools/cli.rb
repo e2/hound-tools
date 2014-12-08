@@ -11,6 +11,7 @@ module Hound
   module Tools
     class Cli < Thor
       INSTRUCTIONS = <<-EOS
+
          **** WARNING!!! ****
 
         1. All Rubocop offenses are initially ignored! (see .rubocop_todo.yml
