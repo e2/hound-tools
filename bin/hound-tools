@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'hound/tools/cli'
+
+Hound::Tools::Cli.start
