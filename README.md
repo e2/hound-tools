@@ -8,7 +8,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 group :development do
-  gem 'hound-tools', require: false
+  gem 'hound-tools', '~> 0.0', require: false
 end
 ```
 
