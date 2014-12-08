@@ -3,10 +3,10 @@ require "hound/tools/rubocop_yml"
 require_relative "template_spec"
 
 RSpec.describe Hound::Tools::RubocopYml do
-  filename = '.rubocop.yml'
+  filename = ".rubocop.yml"
   it_behaves_like "a template", filename
 
-  describe '#generate' do
+  describe "#generate" do
     before do
       allow(IO).to receive(:read).
         with(/lib\/hound\/tools\/templates\/_#{filename}$/).and_call_original
@@ -23,7 +23,7 @@ RSpec.describe Hound::Tools::RubocopYml do
       it "creates a valid #{filename} file" do
         expect(IO).to receive(:write).with("#{filename}", anything) do |_file, data|
           expect(data).to be
-          config = YAML::load(data)['inherit_from']
+          config = YAML::load(data)["inherit_from"]
           expect(config).to match_array(%w(.rubocop.hound_defaults.yml .rubocop_todo.yml))
         end
 
@@ -37,7 +37,7 @@ RSpec.describe Hound::Tools::RubocopYml do
       end
 
       context "with no 'inherit_from' section" do
-        let(:data) { 'foo: :bar' }
+        let(:data) { "foo: :bar" }
 
         it "says the file is invalid" do
           msg = "Error: #{filename} is invalid! (No 'inherit_from' section)"

@@ -1,11 +1,11 @@
-require 'thor'
-require 'yaml'
+require "thor"
+require "yaml"
 
-require 'hound/tools/hound_yml'
-require 'hound/tools/hound_defaults'
-require 'hound/tools/rubocop_yml'
+require "hound/tools/hound_yml"
+require "hound/tools/hound_defaults"
+require "hound/tools/rubocop_yml"
 
-require 'hound/tools/runner'
+require "hound/tools/runner"
 
 module Hound
   module Tools
@@ -65,7 +65,7 @@ module Hound
 
         # TODO: help setup Rakefile?
 
-        Kernel.system('bundle exec rubocop --auto-gen')
+        Kernel.system("bundle exec rubocop --auto-gen")
         $stdout.puts INSTRUCTIONS
       end
 

@@ -1,4 +1,4 @@
-require 'yaml'
+require "yaml"
 require "hound/tools/template"
 
 module Hound
@@ -7,16 +7,16 @@ module Hound
       include Template
 
       def initialize
-        super '.rubocop.yml'
+        super ".rubocop.yml"
       end
 
       private
 
       def _validate(data)
         config = YAML.load(data)
-        inherited = config['inherit_from']
+        inherited = config["inherit_from"]
         fail InvalidTemplate, "No 'inherit_from' section" unless inherited
-        file = '.rubocop.hound_defaults.yml'
+        file = ".rubocop.hound_defaults.yml"
         fail InvalidTemplate, "'#{file}' not inherited" unless inherited.include?(file)
       end
     end

@@ -52,7 +52,7 @@ module Hound
 
       it "runs rubocop --auto-gen" do
         expect(Kernel).to have_received(:system).
-          with('bundle exec rubocop --auto-gen')
+          with("bundle exec rubocop --auto-gen")
       end
     end
 

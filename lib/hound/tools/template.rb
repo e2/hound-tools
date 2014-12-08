@@ -23,14 +23,13 @@ module Hound
 
       def _template_for(file)
         template_dir = Pathname.new(__FILE__).expand_path.dirname + "templates"
-        path = template_dir + file.sub(/^\./,'_.')
+        path = template_dir + file.sub(/^\./, "_.")
         path.read
       end
 
-      def _validate(data)
+      def _validate(_data)
         fail NotImplementedError
       end
     end
   end
 end
-

@@ -1,15 +1,15 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'hound/tools/version'
+require "hound/tools/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "hound-tools"
   spec.version       = Hound::Tools::VERSION
   spec.authors       = ["Cezary Baginski"]
   spec.email         = ["cezary@chronomantic.net"]
-  spec.summary       = %q{Tools for configuring and using HoundCI}
-  spec.description   = %q{Matches your project config to give the same errors as HoundCi}
+  spec.summary       = "Tools for configuring and using HoundCI"
+  spec.description   = "Matches your project config to give the same errors as HoundCi"
   spec.homepage      = ""
   spec.license       = "MIT"
 

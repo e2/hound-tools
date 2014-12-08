@@ -3,11 +3,11 @@ require "hound/tools/hound_defaults"
 require_relative "template_spec"
 
 RSpec.describe Hound::Tools::HoundDefaults do
-  filename = '.rubocop.hound_defaults.yml'
+  filename = ".rubocop.hound_defaults.yml"
 
   it_behaves_like "a template", filename
 
-  describe '#generate' do
+  describe "#generate" do
     before do
       allow(IO).to receive(:read).
         with(/lib\/hound\/tools\/templates\/_#{filename}$/).and_call_original
@@ -26,15 +26,15 @@ RSpec.describe Hound::Tools::HoundDefaults do
           expect(data).to be
           config = YAML::load(data)
           expect(config).to be
-          expect(config).to include('StringLiterals' => {'EnforcedStyle' => 'double_quotes' })
+          expect(config).to include("StringLiterals" => { "EnforcedStyle" => "double_quotes" })
         end
 
         subject.generate
       end
     end
 
-    context 'with existing invalid #{filename}' do
-      let(:contents) { 'foo: :bar' }
+    context "with existing invalid #{filename}" do
+      let(:contents) { "foo: :bar" }
       before { allow(IO).to receive(:read).with(filename).and_return(contents) }
 
       it "returns false" do

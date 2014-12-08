@@ -2,11 +2,11 @@ require "hound/tools/hound_yml"
 
 require_relative "template_spec"
 RSpec.describe Hound::Tools::HoundYml do
-  filename = '.hound.yml'
+  filename = ".hound.yml"
 
   it_behaves_like "a template", filename
 
-  describe '#generate' do
+  describe "#generate" do
     before do
       allow(IO).to receive(:read).
         with(/lib\/hound\/tools\/templates\/_#{filename}$/).and_call_original
@@ -23,9 +23,9 @@ RSpec.describe Hound::Tools::HoundYml do
       it "creates a valid #{filename} file" do
         expect(IO).to receive(:write).with("#{filename}", anything) do |_file, data|
           expect(data).to be
-          config = YAML::load(data)['ruby']
-          expect(config).to include('enabled' => true)
-          expect(config).to include('config_file' => '.rubocop.yml')
+          config = YAML::load(data)["ruby"]
+          expect(config).to include("enabled" => true)
+          expect(config).to include("config_file" => ".rubocop.yml")
         end
 
         subject.generate
@@ -38,7 +38,7 @@ RSpec.describe Hound::Tools::HoundYml do
       end
 
       context "with no 'ruby' section" do
-        let(:data) { 'foo: :bar' }
+        let(:data) { "foo: :bar" }
 
         it "says the file is invalid" do
           msg = "Error: #{filename} is invalid! (No 'ruby' section)"

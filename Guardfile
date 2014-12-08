@@ -7,8 +7,6 @@
 ## Uncomment to clear the screen before every task
 # clearing :on
 
-
-
 # Note: The cmd option is now required due to the increasing number of ways
 #       rspec may be run, below are examples of the most common uses.
 #  * bundler: 'bundle exec rspec'
@@ -33,10 +31,10 @@ guard :rspec, cmd: "bundle exec rspec" do
 
   hound = OpenStruct.new
   hound.libspec = ->(m) { "spec/lib/hound/tools/#{m}_spec.rb" }
-  hound.libspecs = ->(m) { m.map {|name| hound.libspec.(name) } }
+  hound.libspecs = ->(m) { m.map { |name| hound.libspec.(name) } }
   hound.template_r = ->(m) { /^#{Regexp.quote("lib/hound/tools/templates/_#{m}")}$/ }
 
-  watch('lib/hound/tools/template.rb') { hound.libspecs.(%w(cli hound_yml hound_defaults)) }
-  watch(hound.template_r.('.hound.yml')) { hound.libspecs.(%w(cli hound_yml)) }
-  watch(hound.template_r.('.rubocop.hound_defaults.yml')) { hound.libspecs.(%w(cli hound_defaults)) }
+  watch("lib/hound/tools/template.rb") { hound.libspecs.(%w(cli hound_yml hound_defaults)) }
+  watch(hound.template_r.(".hound.yml")) { hound.libspecs.(%w(cli hound_yml)) }
+  watch(hound.template_r.(".rubocop.hound_defaults.yml")) { hound.libspecs.(%w(cli hound_defaults)) }
 end
