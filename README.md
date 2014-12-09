@@ -12,7 +12,7 @@ In your Gemfile:
 
 ```ruby
 group :development do
-  gem 'hound-tools', '~> 0.0.3', require: false
+  gem 'hound-tools', '~> 0.0.4', require: false
 end
 ```
 
