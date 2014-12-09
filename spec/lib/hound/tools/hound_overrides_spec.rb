@@ -1,9 +1,9 @@
-require "hound/tools/hound_defaults"
+require "hound/tools/hound_overrides"
 
 require_relative "template_spec"
 
-RSpec.describe Hound::Tools::HoundDefaults do
-  filename = ".hound/defaults.yml"
+RSpec.describe Hound::Tools::HoundOverrides do
+  filename = ".hound/overrides.yml"
 
   it_behaves_like "a template", filename
 
@@ -27,7 +27,7 @@ RSpec.describe Hound::Tools::HoundDefaults do
           expect(data).to be
           config = YAML::load(data)
           expect(config).to be
-          expect(config).to include("StringLiterals" => { "EnforcedStyle" => "double_quotes" })
+          expect(config['AllCops']).to include("Exclude" => %w(db/schema.rb Gemfile Rakefile))
         end
 
         subject.generate
@@ -43,7 +43,7 @@ RSpec.describe Hound::Tools::HoundDefaults do
       end
 
       it "displays the file already exists" do
-        msg = "Error: #{filename} is invalid! (No StringLiterals section)"
+        msg = "Error: #{filename} is invalid! (No AllCops section)"
         expect($stderr).to receive(:puts).with(msg)
         subject.generate
       end

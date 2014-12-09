@@ -18,13 +18,17 @@ RSpec.describe Hound::Tools::RubocopYml do
       before do
         allow(IO).to receive(:read).with("#{filename}").and_raise(Errno::ENOENT)
         allow(IO).to receive(:write).with("#{filename}", anything)
+        allow(FileUtils).to receive(:mkpath).with(File.dirname('.'))
       end
 
       it "creates a valid #{filename} file" do
         expect(IO).to receive(:write).with("#{filename}", anything) do |_file, data|
           expect(data).to be
-          config = YAML::load(data)["inherit_from"]
-          expect(config).to match_array(%w(.rubocop.hound_defaults.yml .rubocop_todo.yml))
+          config = YAML::load(data)
+
+          expected = %w(.hound/defaults.yml .hound/overrides.yml .rubocop_todo.yml)
+          expect(config["inherit_from"]).to match_array(expected)
+          expect(config["AllCops"]).to include('RunRailsCops' => true)
         end
 
         subject.generate
@@ -50,11 +54,11 @@ RSpec.describe Hound::Tools::RubocopYml do
         end
       end
 
-      context "when inherit_from lacks '.rubocop.hound_defaults.yml'" do
+      context "when inherit_from lacks '.hound/defaults.yml'" do
         let(:data) { "inherit_from:\n\  bar: baz" }
 
         it "says the file is invalid" do
-          msg = "Error: #{filename} is invalid! ('.rubocop.hound_defaults.yml' not inherited)"
+          msg = "Error: #{filename} is invalid! ('.hound/defaults.yml' not inherited)"
           expect($stderr).to receive(:puts).with(msg)
           subject.generate
         end

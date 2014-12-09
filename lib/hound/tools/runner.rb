@@ -20,7 +20,7 @@ module Hound
     class Runner
       DEFAULTS = {
         hound_yml_file: ".hound.yml",
-        hound_ci_style_file: ".rubocop.hound_defaults.yml",
+        hound_ci_style_file: ".hound/defaults.yml",
         debug: false,
         glob_pattern: "**/*.rb" # TODO: should be all files?
       }
@@ -46,7 +46,7 @@ module Hound
         return "RuboCop disabled in #{hound_yml_file}" unless hound.enabled?
 
         # NOTE: treating hound.yml as a rubocop.yml file is deprecated
-        custom = RuboCop::Config.new(hound.rubocop_data || hound.yml)
+        custom = RuboCop::Config.new(hound.rubocop_data || hound.yml, "")
         custom.add_missing_namespaces
         custom.make_excludes_absolute
 

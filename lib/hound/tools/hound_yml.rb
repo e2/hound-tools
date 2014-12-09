@@ -11,6 +11,12 @@ module Hound
         super(".hound.yml")
       end
 
+      def rubocop_filename
+        data = IO.read(filename)
+        _validate(data)
+        YAML.load(data)['ruby']['config_file']
+      end
+
       private
 
       def _validate(data)

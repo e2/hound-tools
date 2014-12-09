@@ -8,7 +8,7 @@ module Hound
       include Template
 
       def initialize
-        super(".rubocop.hound_defaults.yml")
+        super(".hound/defaults.yml")
       end
 
       private
@@ -21,6 +21,9 @@ module Hound
         quote_style = literals["EnforcedStyle"]
         fail InvalidTemplate, "No EnforcedStyle section" unless quote_style
         fail InvalidTemplate, "No double_quotes value"  unless quote_style == "double_quotes"
+
+        # TODO: not tested
+        fail InvalidTemplate, "Detected 'inherited_from' section" if config.key?('inherited_from')
       end
     end
   end

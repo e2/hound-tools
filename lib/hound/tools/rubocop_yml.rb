@@ -16,7 +16,7 @@ module Hound
         config = YAML.load(data)
         inherited = config["inherit_from"]
         fail InvalidTemplate, "No 'inherit_from' section" unless inherited
-        file = ".rubocop.hound_defaults.yml"
+        file = ".hound/defaults.yml"
         fail InvalidTemplate, "'#{file}' not inherited" unless inherited.include?(file)
       end
     end

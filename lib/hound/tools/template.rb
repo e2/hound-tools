@@ -4,6 +4,8 @@ module Hound
       class InvalidTemplate < RuntimeError
       end
 
+      attr_reader :filename
+
       def initialize(filename)
         @filename = filename
       end
@@ -13,6 +15,7 @@ module Hound
         $stdout.puts "#{@filename} (seems ok - skipped)"
         true
       rescue Errno::ENOENT
+        Pathname.new(@filename).dirname.mkpath
         IO.write(@filename, _template_for(@filename))
         $stdout.puts "#{@filename} created"
       rescue InvalidTemplate => e

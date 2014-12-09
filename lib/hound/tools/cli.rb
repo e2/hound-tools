@@ -3,7 +3,9 @@ require "yaml"
 
 require "hound/tools/hound_yml"
 require "hound/tools/hound_defaults"
+require "hound/tools/hound_overrides"
 require "hound/tools/rubocop_yml"
+require "hound/tools/merged_yml"
 
 require "hound/tools/runner"
 
@@ -14,8 +16,8 @@ module Hound
 
          **** WARNING!!! ****
 
-        1. All Rubocop offenses are initially ignored! (see .rubocop_todo.yml
-        to uncomment them)
+        1. All Rubocop offenses are initially ignored! (see .rubocop_todo.yml and/or README)
+          - tweak .rubocop_todo.yml and regenerate with `bundle exec hound-tools`
 
         2. Fixing all offenses at once is discouraged unless:
           - you are the only person actively working on the project (or starting out)
@@ -23,37 +25,23 @@ module Hound
           - you have merged ALL the local and remote branches and you are NOT
           currently maintaining multiple branches
 
-        Instructions:
-        =============
-
-        1. edit .rubocop_todo.yml to uncomment offenses you want to fix now
-
-        2. edit .rubocop.yml to exclude project specific files (e.g. Rakefile,
-        etc.) and add overrides (meaning - rules/cops you want different from
-        Hound's defaults)
-
-        3. Run `bundle exec hound-tool` to see what HoundCi would report on
-        your files (which almost give you the same results as running `bundle
-        exec rubocop` now - if not, file an issue).
-
-        HINT: for quickly fixing most offenses, you can uncomment those in
-        `.rubocop_todo.yml` which include 'auto-correct' and simply run `bundle exec rubocop -a`
-
-        HINT: check the rubocop README for tips on setting up rubocop with
-        Rake, Guard and other tools
-
-        Contributing
-        ============
-
-        Feel free to file issues at: https://github.com/e2/hound-tools
-
+        Issues? Go here: https://github.com/e2/hound-tools/issues
       EOS
 
       desc :init, "Initializes a project to match default HoundCi config"
       def init
         HoundYml.new.generate
         HoundDefaults.new.generate
+        HoundOverrides.new.generate
         RubocopYml.new.generate
+
+        # TODO: help setup Rakefile?
+
+        Kernel.system("bundle exec rubocop --auto-gen")
+
+        MergedYml.new.generate
+
+        $stdout.puts INSTRUCTIONS
 
         unless Kernel.system("bundle show hound-tools > #{IO::NULL}")
           $stderr.puts <<-EOS
@@ -63,19 +51,18 @@ module Hound
 
           EOS
         end
-
-        # TODO: help setup Rakefile?
-
-        Kernel.system("bundle exec rubocop --auto-gen")
-        $stdout.puts INSTRUCTIONS
       end
 
       default_task :check
       desc :check, "Simulates a HoundCi check locally"
       def check
+        # TODO: add an "update" action?
+        # TODO: only merge if necessary (files outdated)
+        MergedYml.new.generate
+
         options = {
           hound_yml_file: ".hound.yml",
-          hound_ci_style_file: ".rubocop.hound_defaults.yml",
+          hound_ci_style_file: ".hound/defaults.yml",
           debug: false,
           glob_pattern: "**/*.rb"
         }
