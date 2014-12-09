@@ -1,12 +1,12 @@
-require "hound/tools/rubocop_yml"
+require 'hound/tools/rubocop_yml'
 
-require_relative "template_spec"
+require_relative 'template_spec'
 
 RSpec.describe Hound::Tools::RubocopYml do
-  filename = ".rubocop.yml"
-  it_behaves_like "a template", filename
+  filename = '.rubocop.yml'
+  it_behaves_like 'a template', filename
 
-  describe "#generate" do
+  describe '#generate' do
     before do
       allow(IO).to receive(:read).
         with(/lib\/hound\/tools\/templates\/_#{filename}$/).and_call_original
@@ -27,8 +27,8 @@ RSpec.describe Hound::Tools::RubocopYml do
           config = YAML::load(data)
 
           expected = %w(.hound/defaults.yml .hound/overrides.yml .rubocop_todo.yml)
-          expect(config["inherit_from"]).to match_array(expected)
-          expect(config["AllCops"]).to include('RunRailsCops' => true)
+          expect(config['inherit_from']).to match_array(expected)
+          expect(config['AllCops']).to include('RunRailsCops' => true)
         end
 
         subject.generate
@@ -41,15 +41,15 @@ RSpec.describe Hound::Tools::RubocopYml do
       end
 
       context "with no 'inherit_from' section" do
-        let(:data) { "foo: :bar" }
+        let(:data) { 'foo: :bar' }
 
-        it "says the file is invalid" do
+        it 'says the file is invalid' do
           msg = "Error: #{filename} is invalid! (No 'inherit_from' section)"
           expect($stderr).to receive(:puts).with(msg)
           subject.generate
         end
 
-        it "returns false" do
+        it 'returns false' do
           expect(subject.generate).to be_falsey
         end
       end
@@ -57,7 +57,7 @@ RSpec.describe Hound::Tools::RubocopYml do
       context "when inherit_from lacks '.hound/defaults.yml'" do
         let(:data) { "inherit_from:\n\  bar: baz" }
 
-        it "says the file is invalid" do
+        it 'says the file is invalid' do
           msg = "Error: #{filename} is invalid! ('.hound/defaults.yml' not inherited)"
           expect($stderr).to receive(:puts).with(msg)
           subject.generate

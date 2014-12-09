@@ -1,8 +1,8 @@
-RSpec.shared_examples "a template" do |filename|
+RSpec.shared_examples 'a template' do |filename|
 
   specify { expect(subject.filename).to eq(filename) }
 
-  describe "#generate" do
+  describe '#generate' do
     before do
       allow(IO).to receive(:read).
         with(/lib\/hound\/tools\/templates\/_#{filename}$/).and_call_original
@@ -17,7 +17,7 @@ RSpec.shared_examples "a template" do |filename|
         allow(FileUtils).to receive(:mkpath).with(File.dirname(filename))
       end
 
-      it "displays the file was created" do
+      it 'displays the file was created' do
         expect($stdout).to receive(:puts).with("#{filename} created")
         subject.generate
       end
@@ -29,12 +29,12 @@ RSpec.shared_examples "a template" do |filename|
           allow(IO).to receive(:read).with(filename).and_return(contents)
         end
 
-        it "displays the files was skipped" do
+        it 'displays the files was skipped' do
           expect($stdout).to receive(:puts).with("#{filename} (seems ok - skipped)")
           subject.generate
         end
 
-        it "returns true" do
+        it 'returns true' do
           expect(subject.generate).to be_truthy
         end
       end

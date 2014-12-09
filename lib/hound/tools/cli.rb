@@ -1,13 +1,13 @@
-require "thor"
-require "yaml"
+require 'thor'
+require 'yaml'
 
-require "hound/tools/hound_yml"
-require "hound/tools/hound_defaults"
-require "hound/tools/hound_overrides"
-require "hound/tools/rubocop_yml"
-require "hound/tools/merged_yml"
+require 'hound/tools/hound_yml'
+require 'hound/tools/hound_defaults'
+require 'hound/tools/hound_overrides'
+require 'hound/tools/rubocop_yml'
+require 'hound/tools/merged_yml'
 
-require "hound/tools/runner"
+require 'hound/tools/runner'
 
 module Hound
   module Tools
@@ -28,7 +28,7 @@ module Hound
         Issues? Go here: https://github.com/e2/hound-tools/issues
       EOS
 
-      desc :init, "Initializes a project to match default HoundCi config"
+      desc :init, 'Initializes a project to match default HoundCi config'
       def init
         HoundYml.new.generate
         HoundDefaults.new.generate
@@ -37,7 +37,7 @@ module Hound
 
         # TODO: help setup Rakefile?
 
-        Kernel.system("bundle exec rubocop --auto-gen")
+        Kernel.system('bundle exec rubocop --auto-gen')
 
         MergedYml.new.generate
 
@@ -54,17 +54,17 @@ module Hound
       end
 
       default_task :check
-      desc :check, "Simulates a HoundCi check locally"
+      desc :check, 'Simulates a HoundCi check locally'
       def check
         # TODO: add an "update" action?
         # TODO: only merge if necessary (files outdated)
         MergedYml.new.generate
 
         options = {
-          hound_yml_file: ".hound.yml",
-          hound_ci_style_file: ".hound/defaults.yml",
+          hound_yml_file: '.hound.yml',
+          hound_ci_style_file: '.hound/defaults.yml',
           debug: false,
-          glob_pattern: "**/*.rb"
+          glob_pattern: '**/*.rb'
         }
 
         Runner.new(options).run

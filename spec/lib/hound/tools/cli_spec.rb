@@ -1,4 +1,4 @@
-require "hound/tools/cli"
+require 'hound/tools/cli'
 
 module Hound
   RSpec.describe Tools::Cli do
@@ -21,55 +21,55 @@ module Hound
         with("bundle show hound-tools > #{IO::NULL}").
         and_return(bundler_result)
 
-      allow(Kernel).to receive(:system).with("bundle exec rubocop --auto-gen")
+      allow(Kernel).to receive(:system).with('bundle exec rubocop --auto-gen')
 
       allow($stderr).to receive(:puts)
       allow($stdout).to receive(:puts)
     end
 
-    describe "#init" do
+    describe '#init' do
       before { subject.init }
 
-      it "generates a .hound.yml" do
+      it 'generates a .hound.yml' do
         expect(hound_yml).to have_received(:generate)
       end
 
-      it "generates a default Hound yml" do
+      it 'generates a default Hound yml' do
         expect(default_yml).to have_received(:generate)
       end
 
-      it "generates a default .rubocop.yml" do
+      it 'generates a default .rubocop.yml' do
         expect(rubocop_yml).to have_received(:generate)
       end
 
-      it "generates an overrides yml" do
+      it 'generates an overrides yml' do
         expect(overrides_yml).to have_received(:generate)
       end
 
-      it "merges the yml files for Hound" do
+      it 'merges the yml files for Hound' do
         expect(merged_yml).to have_received(:generate)
       end
 
-      context "without hound-tools in the Gemfile" do
+      context 'without hound-tools in the Gemfile' do
         let(:bundler_result) { false }
-        it "shows message about adding hound-tools to Gemfile" do
+        it 'shows message about adding hound-tools to Gemfile' do
           expect($stderr).to have_received(:puts).with(/Add hound-tools to your Gemfile/)
         end
       end
 
-      context "with hound-tools in the Gemfile" do
-        it "does not show message about adding hound-tools to Gemfile" do
+      context 'with hound-tools in the Gemfile' do
+        it 'does not show message about adding hound-tools to Gemfile' do
           expect($stderr).to_not have_received(:puts)
         end
       end
 
-      it "runs rubocop --auto-gen" do
+      it 'runs rubocop --auto-gen' do
         expect(Kernel).to have_received(:system).
-          with("bundle exec rubocop --auto-gen")
+          with('bundle exec rubocop --auto-gen')
       end
     end
 
-    describe "#check" do
+    describe '#check' do
       let(:runner) { instance_double(Hound::Tools::Runner) }
 
       before do
@@ -78,11 +78,11 @@ module Hound
         subject.check
       end
 
-      it "merges the yml files for Hound" do
+      it 'merges the yml files for Hound' do
         expect(merged_yml).to have_received(:generate)
       end
 
-      it "runs the check" do
+      it 'runs the check' do
         expect(runner).to have_received(:run)
       end
     end

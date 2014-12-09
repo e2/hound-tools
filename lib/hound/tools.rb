@@ -1,4 +1,4 @@
-require "hound/tools/version"
+require 'hound/tools/version'
 
 module Hound
   module Tools

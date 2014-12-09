@@ -11,18 +11,18 @@ module Hound
 
       def initialize(filename)
         @yaml = YAML.load(IO.read(filename))
-        @enabled = @yaml["ruby"].fetch("enabled", true)
-        @rubocop_file = @yaml["ruby"].fetch("config_file", nil)
+        @enabled = @yaml['ruby'].fetch('enabled', true)
+        @rubocop_file = @yaml['ruby'].fetch('config_file', nil)
         @rubocop_data = @rubocop_file && YAML.load(IO.read(@rubocop_file))
       end
     end
 
     class Runner
       DEFAULTS = {
-        hound_yml_file: ".hound.yml",
-        hound_ci_style_file: ".hound/defaults.yml",
+        hound_yml_file: '.hound.yml',
+        hound_ci_style_file: '.hound/defaults.yml',
         debug: false,
-        glob_pattern: "**/*.rb" # TODO: should be all files?
+        glob_pattern: '**/*.rb' # TODO: should be all files?
       }
 
       def initialize(options)
@@ -40,20 +40,20 @@ module Hound
 
         # NOTE: the code below should be written to EXACTLY do what Hound does
 
-        require "rubocop"
+        require 'rubocop'
         hound = HoundConfig.new(hound_yml_file)
 
         return "RuboCop disabled in #{hound_yml_file}" unless hound.enabled?
 
         # NOTE: treating hound.yml as a rubocop.yml file is deprecated
-        custom = RuboCop::Config.new(hound.rubocop_data || hound.yml, "")
+        custom = RuboCop::Config.new(hound.rubocop_data || hound.yml, '')
         custom.add_missing_namespaces
         custom.make_excludes_absolute
 
         default = RuboCop::ConfigLoader.configuration_from_file(hound_ci_style)
         config = RuboCop::ConfigLoader.merge(default, custom)
 
-        cfg = RuboCop::Config.new(config, "")
+        cfg = RuboCop::Config.new(config, '')
         team = RuboCop::Cop::Team.new(RuboCop::Cop::Cop.all, cfg, debug: debug)
 
         Dir[glob_pattern].each do |path|

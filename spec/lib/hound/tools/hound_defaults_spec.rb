@@ -1,13 +1,13 @@
-require "hound/tools/hound_defaults"
+require 'hound/tools/hound_defaults'
 
-require_relative "template_spec"
+require_relative 'template_spec'
 
 RSpec.describe Hound::Tools::HoundDefaults do
-  filename = ".hound/defaults.yml"
+  filename = '.hound/defaults.yml'
 
-  it_behaves_like "a template", filename
+  it_behaves_like 'a template', filename
 
-  describe "#generate" do
+  describe '#generate' do
     before do
       allow(IO).to receive(:read).
         with(/lib\/hound\/tools\/templates\/_#{filename}$/).and_call_original
@@ -27,7 +27,7 @@ RSpec.describe Hound::Tools::HoundDefaults do
           expect(data).to be
           config = YAML::load(data)
           expect(config).to be
-          expect(config).to include("StringLiterals" => { "EnforcedStyle" => "double_quotes" })
+          expect(config).to include('StringLiterals' => { 'EnforcedStyle' => 'double_quotes' })
         end
 
         subject.generate
@@ -35,14 +35,14 @@ RSpec.describe Hound::Tools::HoundDefaults do
     end
 
     context "with existing invalid #{filename}" do
-      let(:contents) { "foo: :bar" }
+      let(:contents) { 'foo: :bar' }
       before { allow(IO).to receive(:read).with(filename).and_return(contents) }
 
-      it "returns false" do
+      it 'returns false' do
         expect(subject.generate).to be_falsey
       end
 
-      it "displays the file already exists" do
+      it 'displays the file already exists' do
         msg = "Error: #{filename} is invalid! (No StringLiterals section)"
         expect($stderr).to receive(:puts).with(msg)
         subject.generate

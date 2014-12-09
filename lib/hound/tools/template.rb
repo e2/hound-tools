@@ -25,8 +25,8 @@ module Hound
       private
 
       def _template_for(file)
-        template_dir = Pathname.new(__FILE__).expand_path.dirname + "templates"
-        path = template_dir + file.sub(/^\./, "_.")
+        template_dir = Pathname.new(__FILE__).expand_path.dirname + 'templates'
+        path = template_dir + file.sub(/^\./, '_.')
         path.read
       end
 

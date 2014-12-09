@@ -15,7 +15,7 @@ RSpec.configure do |config|
   # config.warnings = true
 
   if config.files_to_run.one?
-    config.default_formatter = "doc"
+    config.default_formatter = 'doc'
   end
 
   # config.profile_examples = 10
@@ -27,19 +27,19 @@ RSpec.configure do |config|
   config.before do
     %w(write read).each do |meth|
       allow(IO).to receive(meth) do |*args|
-        fail "stub me: IO.#{meth}(#{args.map(&:inspect) * ", "})"
+        fail "stub me: IO.#{meth}(#{args.map(&:inspect) * ', '})"
       end
     end
 
     %w(mkdir mkpath).each do |meth|
       allow(FileUtils).to receive(meth) do |*args|
-        fail "stub me: FileUtils.#{meth}(#{args.map(&:inspect) * ", "})"
+        fail "stub me: FileUtils.#{meth}(#{args.map(&:inspect) * ', '})"
       end
     end
 
     %w(` system).each do |meth|
       allow(Kernel).to receive(meth) do |*args|
-        fail "stub me: Kernel.#{meth}(#{args.map(&:inspect) * ", "})"
+        fail "stub me: Kernel.#{meth}(#{args.map(&:inspect) * ', '})"
       end
     end
 

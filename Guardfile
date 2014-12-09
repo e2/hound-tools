@@ -16,14 +16,14 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "bundle exec rspec", all_after_pass: true do
-  require "ostruct"
+guard :rspec, cmd: 'bundle exec rspec', all_after_pass: true do
+  require 'ostruct'
 
   # Generic Ruby apps
   rspec = OpenStruct.new
   rspec.spec = ->(m) { "spec/#{m}_spec.rb" }
-  rspec.spec_dir = "spec"
-  rspec.spec_helper = "spec/spec_helper.rb"
+  rspec.spec_dir = 'spec'
+  rspec.spec_helper = 'spec/spec_helper.rb'
 
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| rspec.spec.("lib/#{m[1]}") }
@@ -34,7 +34,7 @@ guard :rspec, cmd: "bundle exec rspec", all_after_pass: true do
   hound.libspecs = ->(m) { m.map { |name| hound.libspec.(name) } }
   hound.template_r = ->(m) { /^#{Regexp.quote("lib/hound/tools/templates/_#{m}")}$/ }
 
-  watch("lib/hound/tools/template.rb") { hound.libspecs.(%w(cli hound_yml hound_defaults)) }
-  watch(hound.template_r.(".hound.yml")) { hound.libspecs.(%w(cli hound_yml)) }
-  watch(hound.template_r.(".rubocop.hound_defaults.yml")) { hound.libspecs.(%w(cli hound_defaults)) }
+  watch('lib/hound/tools/template.rb') { hound.libspecs.(%w(cli hound_yml hound_defaults)) }
+  watch(hound.template_r.('.hound.yml')) { hound.libspecs.(%w(cli hound_yml)) }
+  watch(hound.template_r.('.rubocop.hound_defaults.yml')) { hound.libspecs.(%w(cli hound_defaults)) }
 end

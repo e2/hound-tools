@@ -12,8 +12,8 @@ AllCops:
 
 # TODO: put your overrides here:
 
-# StringLiterals:
-#  EnforcedStyle: single_quotes
+StringLiterals:
+  EnforcedStyle: single_quotes
 #
 # LineLength:
 #  Max: 200

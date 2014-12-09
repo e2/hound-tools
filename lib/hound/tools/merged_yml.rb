@@ -1,6 +1,6 @@
-require "hound/tools/template"
-require "hound/tools/hound_yml"
-require "hound/tools/hound_overrides"
+require 'hound/tools/template'
+require 'hound/tools/hound_yml'
+require 'hound/tools/hound_overrides'
 
 module Hound
   module Tools
@@ -24,9 +24,9 @@ module Hound
 #
 EOS
         [HoundOverrides.new.filename, @todo_file].each do |filename|
-          s.puts "# ---------------------------------"
+          s.puts '# ---------------------------------'
           s.puts "# #{filename}"
-          s.puts "# ---------------------------------"
+          s.puts '# ---------------------------------'
           s.puts IO.read(filename)
         end
         Pathname.new(filename).dirname.mkpath

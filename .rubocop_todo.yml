@@ -9,14 +9,3 @@
 # Configuration parameters: AllowURI.
 Metrics/LineLength:
   Max: 113
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceAfterComma:
-  Enabled: false
-
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiterals:
-  Enabled: false
