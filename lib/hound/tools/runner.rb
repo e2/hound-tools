@@ -41,6 +41,8 @@ module Hound
         # NOTE: the code below should be written to EXACTLY do what Hound does
 
         require 'rubocop'
+
+        RuboCop::ConfigLoader.debug = debug
         hound = HoundConfig.new(hound_yml_file)
 
         return "RuboCop disabled in #{hound_yml_file}" unless hound.enabled?
