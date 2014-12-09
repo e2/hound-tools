@@ -3,7 +3,7 @@ require 'hound/tools/merged_yml'
 require_relative 'template_spec'
 
 RSpec.describe Hound::Tools::MergedYml do
-  filename = '.hound/.rubocop.yml'
+  filename = '.rubocop_merged_for_hound.yml'
 
   # it_behaves_like "a template", filename
   specify { expect(subject.filename).to eq(filename) }
@@ -17,7 +17,7 @@ RSpec.describe Hound::Tools::MergedYml do
 
       allow(IO).to receive(:read).with('.hound/overrides.yml').and_return('foo')
       allow(IO).to receive(:read).with('.rubocop_todo.yml').and_return('bar')
-      allow(FileUtils).to receive(:mkpath).with('.hound')
+      allow(FileUtils).to receive(:mkpath).with('.')
 
       allow(IO).to receive(:write).with(filename, anything)
     end
@@ -46,7 +46,7 @@ RSpec.describe Hound::Tools::MergedYml do
     end
 
     it 'prints info about merging' do
-      expect($stdout).to receive(:puts).with(/\.hound\/\.rubocop\.yml \(regenerated\)/)
+      expect($stdout).to receive(:puts).with(/\.rubocop_merged_for_hound\.yml \(regenerated\)/)
       subject.generate
     end
   end

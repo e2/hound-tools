@@ -11,7 +11,7 @@ module Hound
         @todo_file = '.rubocop_todo.yml'
 
         # NOTE: should be named. .rubocop.yml to prevent RuboCop from traversing
-        super('.hound/.rubocop.yml')
+        super('.rubocop_merged_for_hound.yml')
       end
 
       def generate
