@@ -8,7 +8,7 @@ Tools and configuration to locally simulate HoundCi checks
 
 ## Initial Setup
 
-Add this to your Gemfile:
+In your Gemfile:
 
 ```ruby
 group :development do
@@ -16,13 +16,13 @@ group :development do
 end
 ```
 
-Run this for a customizable RuboCop and Hound compatible setup:
+Create customizable RuboCop + Hound setup:
 
 ```bash
-$ hound-tools init
+$ bundle exec hound-tools init
 ```
 
-NOTE: this runs 'rubocop --auto-gen', so it will disable all the offenses.
+(NOTE: this runs `rubocop --auto-gen`, so it will disable all the offenses.)
 
 ## Add new files to repository
 
@@ -49,7 +49,7 @@ Every time you modify `.rubocop_todo.yml` or `.hound/overrides.yml`, you'll
 want to regenerate `.rubocop_merged_for_hound.yml` with:
 
 ```bash
-$ hound-tools
+$ bundle exec hound-tools
 ```
 
 (And then you'll want to add all 3 to the repository before doing anything else).
@@ -72,17 +72,21 @@ bundle exec rubocop
 ## Why is this so complex?
 
 Well, simply because Hound doesn't support the RuboCop `inherited_from` keys.
-And that's because Hound is avoiding touching the filesystem, because it
-downloads files to memory from GitHub.
+And that's because Hound is avoiding touching the filesystem - which makes
+sense since it downloads files to memory from GitHub.
 
 Also, since Hound internally loads it's defaults and does a "mini-merge" of the
 configurations, it needs a different setup than Rubocop.
 
+I won't mention the clever hacks in Hound to side-step directory traversing and
+other messy issues (e.g. handling excludes).
+
+
 ## Alternatives
 
-1) Use only the default Hound settings (without being able to Hound-check them locally)
+1) Using only the default Hound settings (without being able to Hound-check them locally)
 
-2) Copy the default Hound settings (`.hound/defaults.yml`) to `.rubocop.yml` and tweak them (but you loose the flexibility and control of using multiple files and the coolness of .rubocop_todo.yml with 'inherited_from')
+2) Copying the default Hound settings (`.hound/defaults.yml`) to `.rubocop.yml` and tweak them (but you loose the flexibility and control of using multiple files and the coolness of .rubocop_todo.yml with 'inherited_from')
 
 
 ## Contributing
