@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['cezary@chronomantic.net']
   spec.summary       = 'Tools for configuring and using HoundCI'
   spec.description   = 'Matches your project config to give the same errors as HoundCi'
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/e2/hound-tools'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
