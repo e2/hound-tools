@@ -6,7 +6,7 @@
 # ---------------------------------
 # .hound/overrides.yml
 # ---------------------------------
-# NOTE: DO NOT put a 'inheried_from' in this file, because Hound with silently
+# NOTE: DO NOT put a 'inherited_from' in this file, because Hound with silently
 # ignore it
 #
 # Files you want to exclude
